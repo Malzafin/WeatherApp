@@ -3,9 +3,9 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Aplikacja Pogodowa</Text>
-      <Text style={styles.info}>Temperatura: --°C</Text>
-      <Text style={styles.info}>Lokalizacja: --</Text>
+      <Text style={styles.header}>Weather App</Text>
+      <Text style={styles.info}>Temperature: °C</Text>
+      <Text style={styles.info}>Lokalizacja: </Text>
     </View>
 );
 
