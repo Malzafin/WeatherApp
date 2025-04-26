@@ -5,6 +5,7 @@ type WeatherData = {
     description: string,
     icon: string,
     updateWeather: () => void;
+    status: string;
 };
 
 
@@ -15,10 +16,35 @@ export const WeatherProvider = ({ children }: {children: ReactNode}) => {
     const [temperature, setTemperature] = useState('--');
     const [description, setDescription] = useState('--');
     const [icon, setIcon] = useState('--');
+    const [status, setStatus] = useState('');
 
-    const updateWeather = () => {
-        console.log('Pobrane dane pogody');
-    }
+    const updateWeather = async () => {
+        console.log('kliknięto odswieżenie')
+        try{
+            const apiKey = 'fab91f1b851104105bf6f56b19676548';
+            const city = 'Warsaw'; 
+
+            const response = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=pl`
+            );
+
+            const data = await response.json();
+
+            setTemperature(data.main.temp.toFixed(1));
+            setLocation(data.name);
+            setDescription(data.weather[0].description);
+            setIcon(data.weather[0].icon);
+
+            setStatus('Data downloaded correctly')
+            console.log('Weather data downloaded correctly');
+
+        }
+
+        catch (error) {
+            console.error('Error while receiving weather data:', error);
+            setStatus('Data download error');
+        }
+    };
 
     return (
         <WeatherContext.Provider value={{
@@ -27,6 +53,7 @@ export const WeatherProvider = ({ children }: {children: ReactNode}) => {
             description,
             icon,
             updateWeather,
+            status,
         }}>
         
         
