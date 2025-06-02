@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, Button } from 'react-native';
 import { WeatherProvider, useWeather } from './src/WeatherContext';
+import { useEffect, useState } from 'react';
 
 export default function App() {
   return (
@@ -11,6 +12,21 @@ export default function App() {
 
 function WeatherContent() {
   const weather = useWeather();
+
+  const [screen, setScreen] = useState(Dimensions.get ('window'));
+
+  useEffect (() => {
+    const onChange  = ({window}) => {
+      setScreen(window);
+    };
+
+    const resizeHandler = Dimensions.addEventListener('change', onChange);
+
+    return () => {
+      resizeHandler.remove();
+    };
+}, []);
+
 
   return (
     <View style={styles.container}>
