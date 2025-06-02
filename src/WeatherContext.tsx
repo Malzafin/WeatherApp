@@ -1,4 +1,6 @@
 import React, {createContext, useState, useContext, ReactNode } from 'react';
+import * as Location from 'expo-location';
+
 type WeatherData = {
     location: string,
     temperature: string,
