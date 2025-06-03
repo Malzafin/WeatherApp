@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 
 type WeatherData = {
@@ -10,6 +11,14 @@ type WeatherData = {
   status: string;
 };
 
+type StoredWeather = {
+  location: string;
+  temperature: string;
+  description: string;
+  icon: string;
+  status: string;
+};
+
 const WeatherContext = createContext<WeatherData | null>(null);
 
 export const WeatherProvider = ({ children }: { children: ReactNode }) => {
@@ -18,6 +27,25 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [description, setDescription] = useState('--');
   const [icon, setIcon] = useState('--');
   const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    const loadCachedWeather = async () => {
+      try {
+        const saved = await AsyncStorage.getItem('WeatherData');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setTemperature(parsed.temperature);
+          setLocation(parsed.location);
+          setDescription(parsed.description);
+          setIcon(parsed.icon);
+          setStatus('Wyświetlono dane offline');
+        }
+      } catch (error){
+        console.error('Błąd podczas ładowania danych z pamięci:', error);
+      }
+    };
+    loadCachedWeather();
+  }, []);
 
   const updateWeather = async () => {
     console.log('kliknięto odswieżenie');
@@ -50,9 +78,34 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
       setIcon(data.weather[0].icon);
       setStatus('Dane pobrane');
       console.log('Weather data downloaded correctly');
+
+      const toStore: StoredWeather = {
+        temperature: data.main.temp.toFixed(1),
+        location: `${city}, ${district}`,
+        description: data.weather[0].description,
+        icon: data.weather[0].icon,
+        status: 'Dane pobrane',
+      };
+
+    
+      await AsyncStorage.setItem('WeatherData', JSON.stringify(toStore));
     } catch (error) {
       console.error('Error while receiving weather data:', error);
       setStatus('Błąd pobierania danych');
+
+      try {
+        const saved = await AsyncStorage.getItem('WeatherData');
+        if (saved) {
+          const parsed: StoredWeather = JSON.parse(saved);
+          setTemperature(parsed.temperature);
+          setLocation(parsed.location);
+          setDescription(parsed.description);
+          setIcon(parsed.icon);
+          setStatus('Wyświetlono dane offline');
+        }
+      } catch(error){
+        console.error('Error while loading cached weather', error);
+      }
     }
   };
 
