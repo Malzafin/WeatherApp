@@ -52,12 +52,11 @@ npm install
 
 npx expo start
 
-
 5. Zeskanuj kod QR aplikacją **Expo Go** na telefonie
 
 ## Autor
 
-Imię i nazwisko: Mateusz Gajewski 
+Imię i nazwisko: Mateusz Gajewski
 Kierunek: Informatyka
-Rok studiów: 3 
+Rok studiów: 3
 Przedmiot: Języki programowania urządzeń mobilnych
