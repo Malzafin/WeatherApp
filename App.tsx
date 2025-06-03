@@ -1,4 +1,4 @@
-import { Dimensions, View, Text, StyleSheet, Button } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, Button, ScaledSize } from 'react-native';
 import { WeatherProvider, useWeather } from './src/WeatherContext';
 import { useEffect, useState } from 'react';
 
@@ -13,12 +13,15 @@ export default function App() {
 function WeatherContent() {
   const weather = useWeather();
 
-  const [screen, setScreen] = useState(Dimensions.get ('window'));
-  const styles = createStyles(screen.width);
+  const [screen, setScreen] = useState<ScaledSize>(Dimensions.get ('window'));
+  const screenWidth = screen.width;
+  const dynamicFontSize = screenWidth < 400 ? 22 : 26;
+  const styles = createStyles(screen.width, dynamicFontSize);
+
 
   useEffect (() => {
-    const onChange  = ({window}) => {
-      setScreen(window);
+    const onChange = ({ window }: { window: ScaledSize }) => {
+    setScreen(window);
     };
 
     const resizeHandler = Dimensions.addEventListener('change', onChange);
@@ -48,7 +51,7 @@ function WeatherContent() {
   );
 }
 
-const createStyles = (width: number) =>
+const createStyles = (width: number, dynamicFontSize: number) =>
   StyleSheet.create({
     container: {
       flex: 1,
@@ -56,10 +59,12 @@ const createStyles = (width: number) =>
       alignItems: 'center',
       justifyContent: 'center',
       padding: 20,
+      width: '100%',
+      paddingHorizontal: 20,
     },
 
     header: {
-      fontSize: width > 500 ? 30 : 24,
+      fontSize: dynamicFontSize,
       fontWeight: 'bold',
       marginBottom: 20,
     },
