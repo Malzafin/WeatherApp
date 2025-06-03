@@ -40,7 +40,7 @@ Struktura plików:
 
 1. Sklonuj repozytorium:
 
-git clone https://github.com/twoj-uzytkownik/weather-app.git
+git clone https://github.com/Malzafin/WeatherApp
 
 2. Przejdź do folderu projektu:
 
