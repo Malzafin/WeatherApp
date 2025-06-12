@@ -40,7 +40,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
           setIcon(parsed.icon);
           setStatus('Wyświetlono dane offline');
         }
-      } catch (error){
+      } catch (error) {
         console.error('Błąd podczas ładowania danych z pamięci:', error);
       }
     };
@@ -87,7 +87,6 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
         status: 'Dane pobrane',
       };
 
-    
       await AsyncStorage.setItem('WeatherData', JSON.stringify(toStore));
     } catch (error) {
       console.error('Error while receiving weather data:', error);
@@ -103,7 +102,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
           setIcon(parsed.icon);
           setStatus('Wyświetlono dane offline');
         }
-      } catch(error){
+      } catch (error) {
         console.error('Error while loading cached weather', error);
       }
     }

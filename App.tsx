@@ -1,14 +1,11 @@
 import React from 'react';
-import { WeatherProvider} from './src/WeatherContext';
+import { WeatherProvider } from './src/WeatherContext';
 import RootNavigator from './src/navigation/RootNavigator';
 
 export default function App() {
   return (
-    
-      <WeatherProvider>
-        <RootNavigator />
-      </WeatherProvider>
-    
+    <WeatherProvider>
+      <RootNavigator />
+    </WeatherProvider>
   );
 }
-

@@ -5,8 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
 
-
-
 export default function HomeScreen() {
   const weather = useWeather();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -37,16 +35,21 @@ export default function HomeScreen() {
 
       <View style={styles.block}>
         <View style={styles.buttonSpacing}>
-          <Button title="Odśwież dane" onPress={() => weather?.updateWeather()}/>
+          <Button title="Odśwież dane" onPress={() => weather?.updateWeather()} />
         </View>
         <View style={styles.buttonSpacing}>
-          <Button title="Zobacz szczegóły" onPress={() => navigation.navigate('Details', {
-            location: weather?.location ?? '--',
-            temperature: weather?.temperature ?? '--',
-            description: weather?.description ?? '--',
-            icon: weather?.icon ?? '--',
-            status: weather?.status ?? '--',
-          })}/>
+          <Button
+            title="Zobacz szczegóły"
+            onPress={() =>
+              navigation.navigate('Details', {
+                location: weather?.location ?? '--',
+                temperature: weather?.temperature ?? '--',
+                description: weather?.description ?? '--',
+                icon: weather?.icon ?? '--',
+                status: weather?.status ?? '--',
+              })
+            }
+          />
         </View>
         <Text style={styles.info}>{weather?.status}</Text>
       </View>
@@ -91,5 +94,5 @@ const createStyles = (width: number, dynamicFontSize: number) =>
     buttonSpacing: {
       marginBottom: 10,
       width: 200,
-    }
+    },
   });
