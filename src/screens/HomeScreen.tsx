@@ -1,10 +1,15 @@
-import { Dimensions, View, Text, StyleSheet, Button, ScaledSize } from 'react-native';
 import { useEffect, useState } from 'react';
-import { useWeather } from '../src/WeatherContext';
+import { Dimensions, View, Text, StyleSheet, Button, ScaledSize } from 'react-native';
+import { useWeather } from '../WeatherContext';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/RootNavigator';
+
+
 
 export default function HomeScreen() {
   const weather = useWeather();
-
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [screen, setScreen] = useState<ScaledSize>(Dimensions.get('window'));
   const screenWidth = screen.width;
   const dynamicFontSize = screenWidth < 400 ? 22 : 26;
@@ -31,7 +36,18 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.block}>
-        <Button title="Refresh data" onPress={() => weather?.updateWeather()} />
+        <View style={styles.buttonSpacing}>
+          <Button title="Odśwież dane" onPress={() => weather?.updateWeather()}/>
+        </View>
+        <View style={styles.buttonSpacing}>
+          <Button title="Zobacz szczegóły" onPress={() => navigation.navigate('Details', {
+            location: weather?.location ?? '--',
+            temperature: weather?.temperature ?? '--',
+            description: weather?.description ?? '--',
+            icon: weather?.icon ?? '--',
+            status: weather?.status ?? '--',
+          })}/>
+        </View>
         <Text style={styles.info}>{weather?.status}</Text>
       </View>
     </View>
@@ -71,4 +87,9 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       margin: 10,
       alignItems: 'center',
     },
+
+    buttonSpacing: {
+      marginBottom: 10,
+      width: 200,
+    }
   });

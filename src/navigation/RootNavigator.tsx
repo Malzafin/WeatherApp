@@ -6,7 +6,13 @@ import DetailsScreen from '../screens/DetailsScreen';
 
 export type RootStackParamList = {
     Home: undefined;
-    Details: { temperature: string };
+    Details: { 
+        location: string;
+        temperature: string;
+        description: string;
+        icon: string;
+        status: string;
+    };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
