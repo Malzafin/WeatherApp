@@ -1,3 +1,6 @@
+/**
+ * HomeScreen – pokazuje podstawowe dane pogodowe oraz przycisk odświeżania
+ */
 import { useEffect, useState } from 'react';
 import { Dimensions, View, Text, StyleSheet, Button, ScaledSize } from 'react-native';
 import { useWeather } from '../WeatherContext';
@@ -8,6 +11,8 @@ import type { RootStackParamList } from '../navigation/RootNavigator';
 export default function HomeScreen() {
   const weather = useWeather();
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  /* responsywne wymiary */
   const [screen, setScreen] = useState<ScaledSize>(Dimensions.get('window'));
   const screenWidth = screen.width;
   const dynamicFontSize = screenWidth < 400 ? 22 : 26;
@@ -61,6 +66,7 @@ export default function HomeScreen() {
   );
 }
 
+/* --- Style --- */
 const createStyles = (width: number, dynamicFontSize: number) =>
   StyleSheet.create({
     container: {

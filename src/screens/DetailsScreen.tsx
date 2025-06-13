@@ -1,3 +1,6 @@
+/**
+ * DetailsScreen – pełne informacje o pogodzie
+ */
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, ScaledSize, ScrollView } from 'react-native';
 import { useRoute, RouteProp } from '@react-navigation/native';
@@ -10,6 +13,7 @@ export default function DetailsScreen() {
   const route = useRoute<DetailsRouteProp>();
   const { location, temperature, description, icon, status } = route.params;
 
+  /* responsywność */
   const [screen, setScreen] = useState<ScaledSize>(Dimensions.get('window'));
   const screenWidth = screen.width;
   const dynamicFontSize = screenWidth < 400 ? 22 : 26;
@@ -27,6 +31,9 @@ export default function DetailsScreen() {
     };
   }, []);
 
+  /* ikonka @4x */
+  const iconUrl = `https://openweathermap.org/img/wn/${icon}@4x.png`;
+
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
       <ScrollView
@@ -42,7 +49,7 @@ export default function DetailsScreen() {
           <Text style={styles.info}>Temperatura: {temperature}°C</Text>
           <Text style={styles.info}>Opis: {description}</Text>
             <Image
-              source={{ uri: `https://openweathermap.org/img/wn/${icon}@4x.png` }}
+              source={{ uri: iconUrl }}
               style={styles.icon}
             />
           <Text style={styles.status}>{status}</Text>
@@ -52,8 +59,8 @@ export default function DetailsScreen() {
   );
 }
 
+/* --- Style --- */
 const BG = '#d0ebff';
-
 const createStyles = (width: number, dynamicFontSize: number) =>
   StyleSheet.create({
     container: {

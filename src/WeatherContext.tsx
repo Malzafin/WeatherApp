@@ -1,8 +1,13 @@
+/**
+ * WeatherContext – przechowuje globalny stan pogody.
+ * Zapewnia pobieranie danych (GPS + OpenWeather) i fallback offline.
+ */
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 
+/** Dane udostępniane w kontekście */
 type WeatherData = {
   location: string;
   temperature: string;
@@ -23,7 +28,9 @@ type StoredWeather = {
 
 const WeatherContext = createContext<WeatherData | null>(null);
 
+/** Provider otacza całą aplikację w App.tsx */
 export const WeatherProvider = ({ children }: { children: ReactNode }) => {
+  /* --- Zmienny stan --- */
   const [location, setLocation] = useState('--');
   const [temperature, setTemperature] = useState('--');
   const [description, setDescription] = useState('--');
@@ -31,6 +38,9 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [status, setStatus] = useState('');
   const [error, setError] = useState<string | null>(null);
 
+   /**
+   *  Ładuje bufor z AsyncStorage przy starcie aplikacji (tryb offline)
+   */
   useEffect(() => {
     const loadCachedWeather = async () => {
       try {
@@ -50,10 +60,14 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     loadCachedWeather();
   }, []);
 
+   /**
+   *  Główna akcja – pobiera lokalizację i dane pogodowe
+   */
   const updateWeather = async () => {
     console.log('kliknięto odswieżenie');
-    setError(null);
+    setError(null); // czyścimy stary błąd
     try {
+      /* 1.  Uprawnienia location */
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setStatus('Brak zgody na lokalizację');
@@ -62,13 +76,15 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
 
+      /* 2.  GPS */
       const locationData = await Location.getCurrentPositionAsync({});
       const { latitude, longitude } = locationData.coords;
 
-      // reverse geocoding - dla miasta
+      /* 3.  Reverse geocoding */
       const place = await Location.reverseGeocodeAsync({ latitude, longitude });
       const city = place[0]?.city || place[0]?.region || 'Nieznane miasto';
 
+      /* 4.  Fetch do OpenWeather */
       const apiKey = 'fab91f1b851104105bf6f56b19676548';
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=pl`
@@ -77,14 +93,14 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
       const data = await response.json();
       const district = data.name;
 
+      /* 5.  Aktualizacja stanu + zapis offline */
       setTemperature(data.main.temp.toFixed(1));
-
       setLocation(`${city}, ${district}`);
       setDescription(data.weather[0].description);
       setIcon(data.weather[0].icon);
       setStatus('Dane pobrane');
       setError(null);
-      console.log('Weather data downloaded correctly');
+      console.log('dane pobrane poprawnie');
 
       const toStore: StoredWeather = {
         temperature: data.main.temp.toFixed(1),
@@ -118,6 +134,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+   /* ------------- Provider ------------- */
   return (
     <WeatherContext.Provider
       value={{
@@ -135,4 +152,5 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+/** Hook ułatwiający dostęp do kontekstu */
 export const useWeather = () => useContext(WeatherContext);
