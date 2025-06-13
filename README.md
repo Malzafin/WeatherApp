@@ -29,6 +29,7 @@ Architektura opiera się na podziale:
 - `Dimensions` do obsługi zmian rozmiaru ekranu i orientacji
 
 Struktura plików:
+
 ```bash
 /WeatherApp
 ├── .expo/                      # Konfiguracja środowiska Expo
@@ -91,7 +92,7 @@ npm run lint
 
 git clone https://github.com/Malzafin/WeatherApp
 
-2. Przejdź do folderu projektu: 
+2. Przejdź do folderu projektu:
 
 cd WeatherApp
 

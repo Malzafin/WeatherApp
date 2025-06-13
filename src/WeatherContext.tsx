@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 
@@ -7,8 +8,9 @@ type WeatherData = {
   temperature: string;
   description: string;
   icon: string;
-  updateWeather: () => void;
   status: string;
+  error: string | null;
+  updateWeather: () => void;
 };
 
 type StoredWeather = {
@@ -27,6 +29,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [description, setDescription] = useState('--');
   const [icon, setIcon] = useState('--');
   const [status, setStatus] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadCachedWeather = async () => {
@@ -49,10 +52,13 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
 
   const updateWeather = async () => {
     console.log('kliknięto odswieżenie');
+    setError(null);
     try {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setStatus('Brak zgody na lokalizację');
+        setError('Brak zgody na lokalizację');
+        Alert.alert('Błąd', 'Nie przyznano dostępu do lokalizacji.');
         return;
       }
 
@@ -77,6 +83,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
       setDescription(data.weather[0].description);
       setIcon(data.weather[0].icon);
       setStatus('Dane pobrane');
+      setError(null);
       console.log('Weather data downloaded correctly');
 
       const toStore: StoredWeather = {
@@ -89,8 +96,10 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
 
       await AsyncStorage.setItem('WeatherData', JSON.stringify(toStore));
     } catch (error) {
-      console.error('Error while receiving weather data:', error);
+      console.error('Błąd pobierania danych', error);
       setStatus('Błąd pobierania danych');
+      setError('Nie udało się pobrać danych pogodowych');
+      Alert.alert('Błąd', 'Nie udało się pobrać danych pogodowych. Sprawdź połączenie internetowe.');
 
       try {
         const saved = await AsyncStorage.getItem('WeatherData');
@@ -103,7 +112,8 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
           setStatus('Wyświetlono dane offline');
         }
       } catch (error) {
-        console.error('Error while loading cached weather', error);
+        console.error('Błąd podczas ładowania danych z pamięci:', error);
+        setError('Nie udało się załadować danych offline');
       }
     }
   };
@@ -117,6 +127,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
         icon,
         updateWeather,
         status,
+        error,
       }}
     >
       {children}
