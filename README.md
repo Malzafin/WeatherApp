@@ -10,10 +10,23 @@ Aplikacja mobilna napisana w React Native z użyciem Expo. Wyświetla aktualną 
 - Obsługa braku zgody na lokalizację
 - Zarządzanie stanem aplikacji przy pomocy Context API
 - Podstawowy interfejs użytkownika zbudowany w oparciu o Flexbox
+- Nawigacja między ekranami: ekran główny i ekran szczegółów (React Navigation)
+- Przekazywanie danych między ekranami i obsługa historii nawigacji
+- Przechowywanie danych offline w pamięci lokalnej (AsyncStorage)
+- Automatyczne ładowanie danych offline po uruchomieniu aplikacji
+- Obsługa zmiany orientacji i responsywność interfejsu (Dimensions API)
+- Formatowanie kodu: Prettier + ESLint
 
 ## Architektura
 
-Aplikacja korzysta z Context API do zarządzania globalnym stanem pogody. Dane są pobierane w asynchroniczny sposób (async/await), a komponent główny jest otoczony przez `WeatherProvider`.
+Aplikacja korzysta z Context API do zarządzania globalnym stanem pogody. Dane są pobierane w asynchroniczny sposób (async/await)
+
+Architektura opiera się na podziale:
+
+- `WeatherContext` do obsługi lokalizacji, pobierania i przechowywania danych pogodowych
+- `React Navigation` do zarządzania ekranami
+- `AsyncStorage` do zachowywania danych offline
+- `Dimensions` do obsługi zmian rozmiaru ekranu i orientacji
 
 Struktura plików:
 
@@ -29,6 +42,22 @@ Struktura plików:
 - Context API
 - Expo Location
 - OpenWeatherMap API
+- React Navigation
+- AsyncStorage
+- ESLint + Prettier
+
+## Jakość kodu i stylowania
+
+- Formatowanie kodu: Prettier
+- Lintowanie i kontrola stylu: ESLint
+- brak stylów inline - przestrzeganie dobrych praktyk `react-native/no-inline-styles`
+
+Uruchamianie:
+
+```bash
+npx prettier --write .
+npm run lint
+```
 
 ## Wymagania
 
@@ -42,7 +71,9 @@ Struktura plików:
 
 git clone https://github.com/Malzafin/WeatherApp
 
-2. Przejdź do folderu projektu:
+2. Przejdź do folderu projektu: 
+
+cd WeatherApp
 
 3. Zainstaluj zależności:
 
@@ -57,6 +88,7 @@ npx expo start
 ## Autor
 
 Imię i nazwisko: Mateusz Gajewski
+Numer albumu: 49591
 Kierunek: Informatyka
 Rok studiów: 3
 Przedmiot: Języki programowania urządzeń mobilnych
