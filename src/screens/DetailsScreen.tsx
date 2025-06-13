@@ -15,7 +15,7 @@ export default function DetailsScreen() {
   const dynamicFontSize = screenWidth < 400 ? 22 : 26;
   const styles = createStyles(screen.width, dynamicFontSize);
 
-   useEffect(() => {
+  useEffect(() => {
     const onChange = ({ window }: { window: ScaledSize }) => {
       setScreen(window);
     };
@@ -29,15 +29,21 @@ export default function DetailsScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-      <ScrollView contentContainerStyle={[styles.container, screen.width > screen.height && styles.containerHorizontal, { backgroundColor:'#f1f8e9' },]}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.container,
+          screen.width > screen.height && styles.containerHorizontal,
+          styles.scrollContainer,
+        ]}
+      >
         <View style={styles.block}>
           <Text style={styles.title}>Szczegóły pogody</Text>
           <Text style={styles.info}>Lokalizacja: {location}</Text>
           <Text style={styles.info}>Temperatura: {temperature}°C</Text>
           <Text style={styles.info}>Opis: {description}</Text>
           <Image
-          source={{ uri: `https://openweathermap.org/img/wn/${icon}@2x.png` }}
-          style={styles.icon}
+            source={{ uri: `https://openweathermap.org/img/wn/${icon}@2x.png` }}
+            style={styles.icon}
           />
           <Text style={styles.status}>{status}</Text>
         </View>
@@ -57,7 +63,10 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       justifyContent: 'center',
       padding: 32,
     },
-     safeArea: {
+    scrollContainer: {
+      backgroundColor: '#f1f8e9',
+    },
+    safeArea: {
       flex: 1,
       backgroundColor: BG,
     },
@@ -91,4 +100,4 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       alignItems: 'center',
       maxWidth: 600,
     },
-});
+  });
