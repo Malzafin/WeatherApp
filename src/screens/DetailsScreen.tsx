@@ -41,10 +41,10 @@ export default function DetailsScreen() {
           <Text style={styles.info}>Lokalizacja: {location}</Text>
           <Text style={styles.info}>Temperatura: {temperature}°C</Text>
           <Text style={styles.info}>Opis: {description}</Text>
-          <Image
-            source={{ uri: `https://openweathermap.org/img/wn/${icon}@2x.png` }}
-            style={styles.icon}
-          />
+            <Image
+              source={{ uri: `https://openweathermap.org/img/wn/${icon}@4x.png` }}
+              style={styles.icon}
+            />
           <Text style={styles.status}>{status}</Text>
         </View>
       </ScrollView>
@@ -52,7 +52,7 @@ export default function DetailsScreen() {
   );
 }
 
-const BG = '#f1f8e9';
+const BG = '#d0ebff';
 
 const createStyles = (width: number, dynamicFontSize: number) =>
   StyleSheet.create({
@@ -64,7 +64,7 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       padding: 32,
     },
     scrollContainer: {
-      backgroundColor: '#f1f8e9',
+      backgroundColor: '#d0ebff',
     },
     safeArea: {
       flex: 1,
@@ -89,6 +89,7 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       width: 100,
       height: 100,
       marginVertical: 10,
+      resizeMode: 'contain',
     },
     containerHorizontal: {
       flexDirection: 'row',
