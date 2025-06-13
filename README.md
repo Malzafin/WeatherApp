@@ -29,11 +29,26 @@ Architektura opiera się na podziale:
 - `Dimensions` do obsługi zmian rozmiaru ekranu i orientacji
 
 Struktura plików:
-
+```bash
 /WeatherApp
-├── App.tsx // główny komponent aplikacji
-└── /src
-└── WeatherContext.tsx // kontekst pogodowy z logiką API i lokalizacji
+├── App.tsx                      # Główny komponent aplikacji (start point)
+├── index.ts                     # Entry point dla bundlera
+├── tsconfig.json                # Konfiguracja TypeScript
+├── eslint.config.cjs            # Konfiguracja ESLint (flat config)
+├── .prettierrc                  # Konfiguracja Prettiera
+├── package.json                 # Plik konfiguracyjny projektu (z zależnościami)
+├── /src
+│   ├── WeatherContext.tsx      # Kontekst globalny do zarządzania danymi pogodowymi
+│   ├── /screens
+│   │   ├── HomeScreen.tsx      # Ekran główny z pogodą
+│   │   └── DetailsScreen.tsx   # Ekran szczegółowy z danymi pogodowymi
+│   └── /navigation
+│       └── RootNavigator.tsx   # Nawigacja między ekranami (React Navigation Stack)
+├── /assets                      # (opcjonalnie) pliki statyczne, np. ikony, obrazy
+├── /.expo                       # Pliki generowane przez Expo (np. ustawienia lokalne)
+├── /node_modules                # Zainstalowane zależności
+
+```
 
 ## Technologie
 
@@ -55,7 +70,7 @@ Struktura plików:
 Uruchamianie:
 
 ```bash
-npx prettier --write .
+npx run format
 npm run lint
 ```
 
