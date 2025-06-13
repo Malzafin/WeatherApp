@@ -31,23 +31,28 @@ Architektura opiera się na podziale:
 Struktura plików:
 ```bash
 /WeatherApp
-├── App.tsx                      # Główny komponent aplikacji (start point)
-├── index.ts                     # Entry point dla bundlera
-├── tsconfig.json                # Konfiguracja TypeScript
-├── eslint.config.cjs            # Konfiguracja ESLint (flat config)
-├── .prettierrc                  # Konfiguracja Prettiera
-├── package.json                 # Plik konfiguracyjny projektu (z zależnościami)
-├── /src
-│   ├── WeatherContext.tsx      # Kontekst globalny do zarządzania danymi pogodowymi
-│   ├── /screens
-│   │   ├── HomeScreen.tsx      # Ekran główny z pogodą
-│   │   └── DetailsScreen.tsx   # Ekran szczegółowy z danymi pogodowymi
-│   └── /navigation
-│       └── RootNavigator.tsx   # Nawigacja między ekranami (React Navigation Stack)
-├── /assets                      # (opcjonalnie) pliki statyczne, np. ikony, obrazy
-├── /.expo                       # Pliki generowane przez Expo (np. ustawienia lokalne)
-├── /node_modules                # Zainstalowane zależności
-
+├── .expo/                      # Konfiguracja środowiska Expo
+├── .vscode/                    # Ustawienia edytora (opcjonalne)
+├── assets/                     # Zasoby statyczne (np. grafiki)
+├── node_modules/               # Zainstalowane zależności
+├── src/                        # Główna logika aplikacji
+│ ├── navigation/
+│ │ └── RootNavigator.tsx       # Konfiguracja stosu nawigacji
+│ ├── screens/
+│ │ ├── HomeScreen.tsx          # Ekran główny z pogodą
+│ │ └── DetailsScreen.tsx       # Ekran ze szczegółami pogody
+│ └── WeatherContext.tsx        # Kontekst pogodowy (API i lokalizacja)
+├── .gitignore
+├── .prettierignore
+├── .prettierrc                 # Konfiguracja Prettiera
+├── app.json                    # Konfiguracja aplikacji Expo
+├── App.tsx                     # Punkt wejściowy aplikacji
+├── eslint.config.cjs           # Konfiguracja ESLinta
+├── index.ts
+├── package-lock.json
+├── package.json
+├── README.md
+└── tsconfig.json               # Konfiguracja TypeScript
 ```
 
 ## Technologie
