@@ -26,7 +26,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const defaultScreenOptions: NativeStackNavigationOptions = {
   headerStyle: { backgroundColor: '#0d99ff' },
   headerTintColor: '#fff',
-  headerTitleAlign: 'center',
   headerTitleStyle: {
     fontWeight: 'bold',
     fontSize: 20,
@@ -39,7 +38,7 @@ export default function RootNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultScreenOptions} initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }} />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
