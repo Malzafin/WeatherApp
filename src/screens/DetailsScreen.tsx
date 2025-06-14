@@ -32,9 +32,8 @@ export default function DetailsScreen() {
   }, []);
 
   /* ikonka @4x */
-  const iconUrl = icon && icon !== '--'
-  ? `https://openweathermap.org/img/wn/${icon}@4x.png`
-  : undefined;
+  const iconUrl =
+    icon && icon !== '--' ? `https://openweathermap.org/img/wn/${icon}@4x.png` : undefined;
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
@@ -50,9 +49,7 @@ export default function DetailsScreen() {
           <Text style={styles.info}>Lokalizacja: {location}</Text>
           <Text style={styles.info}>Temperatura: {temperature}°C</Text>
           <Text style={styles.info}>Opis: {description}</Text>
-           {iconUrl && (
-            <Image source={{ uri: iconUrl }} style={styles.icon} />
-          )}
+          {iconUrl && <Image source={{ uri: iconUrl }} style={styles.icon} />}
         </View>
         <Text style={styles.status}>{status}</Text>
       </ScrollView>
@@ -90,17 +87,17 @@ const createStyles = (width: number, dynamicFontSize: number) =>
     },
 
     card: {
-    padding: 20,
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
-    elevation: 4, // Android
-    shadowColor: '#000', // Iphone
-    shadowOpacity: 0.1, // Iphone
-    shadowRadius: 10, //Iphone
-    shadowOffset: { width: 0, height: 4 }, // Iphone
-    alignItems: 'center',
-    marginBottom: 20,
-  },
+      padding: 20,
+      backgroundColor: '#ffffff',
+      borderRadius: 12,
+      elevation: 4, // Android
+      shadowColor: '#000', // Iphone
+      shadowOpacity: 0.1, // Iphone
+      shadowRadius: 10, //Iphone
+      shadowOffset: { width: 0, height: 4 }, // Iphone
+      alignItems: 'center',
+      marginBottom: 20,
+    },
     status: {
       marginTop: 20,
       fontStyle: 'italic',
