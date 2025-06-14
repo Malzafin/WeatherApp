@@ -33,10 +33,14 @@ export default function HomeScreen() {
   return (
     <View style={[styles.container, screen.width > screen.height && styles.containerHorizontal]}>
       <View style={styles.block}>
-        <Text style={styles.header}>Weather App</Text>
+        <Text style={styles.header}>
+          <Text style={styles.highlight}>Weather App</Text>
+        </Text>
         <Text style={styles.info}>Temperatura: {weather?.temperature}°C </Text>
         <Text style={styles.info}>Lokalizacja: {weather?.location}</Text>
       </View>
+
+      <View style={styles.separator} />
 
       <View style={styles.block}>
         <View style={styles.buttonSpacing}>
@@ -71,7 +75,7 @@ const createStyles = (width: number, dynamicFontSize: number) =>
   StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#e0f7fa',
+      backgroundColor: '#d0ebff',
       alignItems: 'center',
       justifyContent: 'center',
       padding: 20,
@@ -83,6 +87,10 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       fontSize: dynamicFontSize,
       fontWeight: 'bold',
       marginBottom: 20,
+    },
+
+    highlight: {
+      color: '#0077cc',
     },
 
     info: {
@@ -97,14 +105,31 @@ const createStyles = (width: number, dynamicFontSize: number) =>
     },
 
     block: {
-      margin: 10,
+      marginVertical: 20,
+      padding: 20,
+      backgroundColor: '#ffffff',
+      borderRadius: 12,
+      elevation: 4,
+      shadowColor: '#000',
+      shadowOpacity: 0.1,
+      shadowRadius: 10,
+      shadowOffset: { width: 0, height: 4 },
       alignItems: 'center',
     },
 
     buttonSpacing: {
-      marginBottom: 10,
-      width: 200,
+      marginVertical: 8,
+      width: '100%',
+      maxWidth: 200,
     },
+    
+    separator: {
+      height: 1,
+      width: '80%',
+      backgroundColor: '#ccc',
+      marginVertical: 20,
+    },
+
     errorText: {
       color: 'red',
       textAlign: 'center',
