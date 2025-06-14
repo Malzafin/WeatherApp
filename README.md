@@ -16,6 +16,8 @@ Aplikacja mobilna napisana w React Native z użyciem Expo. Wyświetla aktualną 
 - Automatyczne ładowanie danych offline po uruchomieniu aplikacji
 - Obsługa zmiany orientacji i responsywność interfejsu (Dimensions API)
 - Formatowanie kodu: Prettier + ESLint
+- Obsługa orientacji poziomej (horyzontalnej)
+- Warunkowe ładowanie ikon pogodowych
 
 ## Architektura
 
@@ -66,6 +68,8 @@ Struktura plików:
 - React Navigation
 - AsyncStorage
 - ESLint + Prettier
+- React Native SafeAreaContext (obsługa bezpiecznego obszaru ekranów)
+- ScrollView – zapewnienie przewijalności w trybie horyzontalnym i na małych ekranach
 
 ## Jakość kodu i stylowania
 
