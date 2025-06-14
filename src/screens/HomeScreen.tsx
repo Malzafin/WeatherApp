@@ -61,10 +61,7 @@ export default function HomeScreen() {
           />
         </View>
         <Text style={styles.info}>{weather?.status}</Text>
-        {weather?.error && (
-          <Text style={[styles.info, styles.errorText]}>
-          </Text>
-        )}
+        {weather?.error && <Text style={[styles.info, styles.errorText]}></Text>}
       </View>
     </View>
   );
@@ -122,7 +119,7 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       width: '100%',
       maxWidth: 200,
     },
-    
+
     separator: {
       height: 1,
       width: '80%',

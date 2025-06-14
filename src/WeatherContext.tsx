@@ -38,7 +38,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [status, setStatus] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-   /**
+  /**
    *  Ładuje bufor z AsyncStorage przy starcie aplikacji (tryb offline)
    */
   useEffect(() => {
@@ -60,7 +60,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     loadCachedWeather();
   }, []);
 
-   /**
+  /**
    *  Główna akcja – pobiera lokalizację i dane pogodowe
    */
   const updateWeather = async () => {
@@ -115,7 +115,10 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
       console.error('Błąd pobierania danych', error);
       setStatus('Błąd pobierania danych');
       setError('Nie udało się pobrać danych pogodowych');
-      Alert.alert('Błąd', 'Nie udało się pobrać danych pogodowych. Sprawdź połączenie internetowe.');
+      Alert.alert(
+        'Błąd',
+        'Nie udało się pobrać danych pogodowych. Sprawdź połączenie internetowe.'
+      );
 
       try {
         const saved = await AsyncStorage.getItem('WeatherData');
@@ -134,7 +137,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-   /* ------------- Provider ------------- */
+  /* ------------- Provider ------------- */
   return (
     <WeatherContext.Provider
       value={{

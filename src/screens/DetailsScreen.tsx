@@ -48,10 +48,7 @@ export default function DetailsScreen() {
           <Text style={styles.info}>Lokalizacja: {location}</Text>
           <Text style={styles.info}>Temperatura: {temperature}°C</Text>
           <Text style={styles.info}>Opis: {description}</Text>
-            <Image
-              source={{ uri: iconUrl }}
-              style={styles.icon}
-            />
+          <Image source={{ uri: iconUrl }} style={styles.icon} />
           <Text style={styles.status}>{status}</Text>
         </View>
       </ScrollView>
