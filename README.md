@@ -76,7 +76,7 @@ Struktura plików:
 Uruchamianie:
 
 ```bash
-npx run format
+npm run format
 npm run lint
 ```
 
