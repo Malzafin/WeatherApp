@@ -127,8 +127,8 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       padding: 24,
       backgroundColor: '#fff',
       borderRadius: 12,
-      elevation: 4, // cień Android
-      shadowColor: '#000', // cień iOS
+      elevation: 4, // Android
+      shadowColor: '#000', // Iphone
       shadowOpacity: 0.1,
       shadowRadius: 10,
       shadowOffset: { width: 0, height: 4 },
