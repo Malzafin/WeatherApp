@@ -2,7 +2,7 @@
  * HomeScreen – pokazuje podstawowe dane pogodowe oraz przycisk odświeżania
  */
 import { useEffect, useState } from 'react';
-import { Dimensions, View, Text, StyleSheet, Button, ScaledSize } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, ScaledSize, TouchableOpacity } from 'react-native';
 import { useWeather } from '../WeatherContext';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -36,19 +36,21 @@ export default function HomeScreen() {
         <Text style={styles.header}>
           <Text style={styles.highlight}>Weather App</Text>
         </Text>
-        <Text style={styles.info}>Temperatura: {weather?.temperature}°C </Text>
         <Text style={styles.info}>Lokalizacja: {weather?.location}</Text>
+        <Text style={styles.info}>Temperatura: {weather?.temperature}°C </Text>
       </View>
 
       <View style={styles.separator} />
 
       <View style={styles.block}>
         <View style={styles.buttonSpacing}>
-          <Button title="Odśwież dane" onPress={() => weather?.updateWeather()} />
+          <TouchableOpacity style={styles.button} onPress={() => weather?.updateWeather()}>
+            <Text style={styles.buttonText}>Odśwież dane</Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.buttonSpacing}>
-          <Button
-            title="Zobacz szczegóły"
+          <TouchableOpacity
+            style={styles.button}
             onPress={() =>
               navigation.navigate('Details', {
                 location: weather?.location ?? '--',
@@ -58,7 +60,10 @@ export default function HomeScreen() {
                 status: weather?.status ?? '--',
               })
             }
-          />
+          >
+            <Text style={styles.buttonText}>Zobacz szczegóły</Text>
+          </TouchableOpacity>
+          
         </View>
         <Text style={styles.info}>{weather?.status}</Text>
         {weather?.error && <Text style={[styles.info, styles.errorText]}></Text>}
@@ -90,6 +95,13 @@ const createStyles = (width: number, dynamicFontSize: number) =>
       color: '#0077cc',
     },
 
+     separator: {
+      height: 1,
+      width: '80%',
+      backgroundColor: '#ccc',
+      marginVertical: 20,
+    },
+
     info: {
       fontSize: width > 500 ? 20 : 16,
       marginBottom: 10,
@@ -116,15 +128,28 @@ const createStyles = (width: number, dynamicFontSize: number) =>
 
     buttonSpacing: {
       marginVertical: 8,
-      width: '100%',
-      maxWidth: 200,
     },
 
-    separator: {
-      height: 1,
-      width: '80%',
-      backgroundColor: '#ccc',
-      marginVertical: 20,
+    button: {
+      backgroundColor: '#2196F3',
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+      borderRadius: 8,
+      alignItems: 'center',
+      width: '100%',
+      maxWidth: 200,
+      shadowColor: '#000', //Iphone
+      shadowOffset: { width: 0, height: 4 }, //Iphone
+      shadowOpacity: 0.3, //Iphone
+      shadowRadius: 4, //Iphone
+      elevation: 5, // Android
+    },
+
+    buttonText: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: 16,
+      textTransform: 'uppercase',
     },
 
     errorText: {
